@@ -1,0 +1,30 @@
+replicaCount: 1
+
+image:
+  repository: devops-assignment
+  pullPolicy: IfNotPresent
+  tag: latest
+
+nameOverride: "devops-app"
+fullnameOverride: "devops-app"
+
+service:
+  type: NodePort
+  port: 8080
+  nodePort: 30007
+
+mongodb:
+  enabled: true
+  image: mongo
+  port: 27017
+
+resources:
+   limits:
+     memory: "1Gi"
+   requests:
+     cpu: "50m"
+     memory: "256Mi"
+
+env:
+  NODE_ENV: production
+  MONGO_URI: mongodb://mongodb:27017/devopsdb
