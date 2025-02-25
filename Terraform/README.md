@@ -83,16 +83,15 @@ ssh -i <Your-Key.pem> ubuntu@<k8s_server_ip>
 ```
 You will see the Public IP in the outputs
 ---
-
+If you want to reveal the outputs again use the command.
+```bash
+terraform output
+```
 ## 8️⃣ Destroy the Infrastructure (Cleanup)
 To remove all AWS resources when you are done:
 
 ```bash
 terraform destroy -auto-approve
-```
-If you want to reveal the outputs again use the command.
-```bash
-terraform output
 ```
 ---
 
