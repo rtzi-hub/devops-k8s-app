@@ -148,10 +148,31 @@ This project demonstrates:
 
 ---
 
-## **👤 Author**
-This project is maintained by **rtzi-hub** 🚀.
+## **DevOps Assignment - Answers**
+### 1. How to build the Docker container?
+   - Create Dockerfile with all the needs to create the image according to your target
+   - Use the command 'docker build -t <YourTag-of-the-Image> .'
+   - Use the command 'docker run -p 8080:8080 <YourTag-You-Picked>
+   - If you want to upload it to a dockerhub to save the image use the commands: 
+(docker tag devops-assignment your-dockerhub-username/devops-assignment:<version>
+docker push your-dockerhub-username/devops-assignment:<version>)
+Then you will be able to withdraw the image from every environment - (Don't Forget to Create access Key for the deligation)
 
----
+### 2. How to deploy the application and MongoDB using the Helm chart?
+   - helm install devops-app ./<Name Of the Chart Values directory or use a exist template using the command: helm create devops-assignment-chart
+   - Then Create in the templates your Files and enter the values for the values.yaml file and the structure of the deployment.yaml in templates (like: PV,C, Services, Deployment, stateful and more! :)>
+   - Then you can see the resources of the kubernetes using commands like:
+      kubectl get pods
+      kubectl get services
+### 3. How to customize the deployment parameters?
+   - You can override using command like:helm upgrade devops-app ./devops-assignment-chart --set app.image=your-dockerhub-username/devops-assignment:v2 0r helm install name-of-the-image ./<chart folder> --set app.replicas=3 (just add app.<replicas, image, service type and more!>)
+### 4. How the rolling update and service connectivity is achieved?
+   - Every time we are creating new image or any new update in the code, We are pushing it in other version name like (v1, v2, v3, latest)
+   - If you need to rollout and use the previous image you can use the command kubectl rollout undo <deployment/YourImage>
+   - And There is a connectivity MongoDB accessible via address (mongodb://mongodb:27017/devopsdb) 
+   - You can see the variable configuration in the mongodb service file named (MONGO_URI = <URL-of-DB>) 
+   - We used Mongoose to easy way to establish a connection
 
+     
 🚀 **Just copy, paste, and deploy!** 🚀
 
