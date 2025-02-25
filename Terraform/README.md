@@ -100,6 +100,5 @@ terraform destroy -auto-approve
 ⚠️ **Ensure you replace** `<Your-Key.pem>` with your actual AWS **key pair** name in the Terraform file.  
 
 ---
-
-## 🚀 Enjoy Your DevOps Kubernetes Deployment! 🚀
-
+Fast URL for the main project after creating Your infrastructure:  
+[CLICK HERE!](https://github.com/rtzi-hub/devops-k8s-app/tree/main)
