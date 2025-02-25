@@ -24,6 +24,15 @@ kubectl version
 helm version 
 git --version
 ```
+If not you can use Does commands manually
+```bash
+sudo apt update && sudo apt install -y docker.io git && \
+curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && sudo install minikube-linux-amd64 /usr/local/bin/minikube && \
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl" && sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl && \
+curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+sudo usermod -aG docker $USER
+newgrp docker
+```
 
 ---
 
