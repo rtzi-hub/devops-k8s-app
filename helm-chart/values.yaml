@@ -2,15 +2,17 @@ replicaCount: 1
 
 image:
   repository: devops-assignment
-  pullPolicy: IfNotPresent
+  pullPolicy: Never
   tag: latest
 
 nameOverride: "devops-app"
 fullnameOverride: "devops-app"
 
 service:
+  name: devops-app
   type: NodePort
   port: 8080
+  targetPort: 8080
   nodePort: 30007
 
 mongodb:
