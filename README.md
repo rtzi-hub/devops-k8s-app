@@ -24,7 +24,7 @@ kubectl version
 helm version 
 git --version
 ```
-If not you can use Does commands manually
+If not you can use those commands manually:
 ```bash
 sudo apt update && sudo apt install -y docker.io git && \
 curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && sudo install minikube-linux-amd64 /usr/local/bin/minikube && \
