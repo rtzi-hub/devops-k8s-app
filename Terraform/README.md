@@ -19,7 +19,7 @@ Before running this Terraform script, ensure you have the following installed:
 Run the following command to clone the project:
 
 ```bash
-git clone https://github.com/your-repo/devops-terraform.git
+git clone https://github.com/rtzi-hub/devops-terraform.git
 cd devops-terraform
 ```
 
@@ -31,7 +31,7 @@ Ensure your AWS credentials are set up:
 ```bash
 aws configure
 ```
-
+Enter Your Access Key, When Requested.
 ---
 
 ## 4️⃣ Initialize Terraform
@@ -54,7 +54,7 @@ terraform plan
 
 ## 6️⃣ Deploy the Infrastructure
 To apply the Terraform configuration and deploy resources:
-
+(Auto approve command will create your infrastructure instantly)
 ```bash
 terraform apply -auto-approve
 ```
@@ -81,7 +81,7 @@ Use this **IP address** to SSH into your EC2 instance:
 ```bash
 ssh -i <Your-Key.pem> ubuntu@<k8s_server_ip>
 ```
-
+You will see the Public IP in the outputs
 ---
 
 ## 8️⃣ Destroy the Infrastructure (Cleanup)
@@ -90,7 +90,10 @@ To remove all AWS resources when you are done:
 ```bash
 terraform destroy -auto-approve
 ```
-
+If you want to reveal the outputs again use the command.
+```bash
+terraform output
+```
 ---
 
 ## 📌 Notes
