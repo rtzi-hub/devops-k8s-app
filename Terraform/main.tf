@@ -106,6 +106,11 @@ resource "aws_instance" "k8s_server" {
   subnet_id              = aws_subnet.public_subnet.id
   vpc_security_group_ids = [aws_security_group.k8s_sg.id]
 
+  root_block_device {
+    volume_size = 15  
+    volume_type = "gp3"
+  }
+
   tags = {
     Name            = "Kubernetes-Server"
     Devops_Project  = "DevOps Kubernetes Deployment"
