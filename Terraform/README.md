@@ -60,6 +60,7 @@ terraform apply -auto-approve
 ```
 
 This will:
+
 ✔️ Create a **VPC**  
 ✔️ Create a **Public Subnet**  
 ✔️ Set up an **Internet Gateway & Route Table**  
