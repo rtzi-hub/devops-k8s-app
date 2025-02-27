@@ -30,3 +30,7 @@ resources:
 env:
   NODE_ENV: production
   MONGO_URI: mongodb://mongodb:27017/devopsdb
+
+rollingUpdate:
+  maxSurge: 1
+  maxUnavailable: 1
