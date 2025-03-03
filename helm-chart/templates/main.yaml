@@ -1,0 +1,14 @@
+{{- if .Values.features.createDeployments }}
+---
+{{ include "app.deployment" . }}
+---
+{{ include "app.mongodb.deployment" . }}
+{{- end }}
+
+{{- if .Values.features.createServices }}
+---
+{{ include "app.service" . }}
+---
+{{ include "app.mongodb.service" . }}
+{{- end }}
+

@@ -1,36 +1,63 @@
-replicaCount: 1
+apiVersion: apps/v1
 
-image:
-  repository: devops-assignment
-  pullPolicy: Never
-  tag: latest
-
-nameOverride: "devops-app"
-fullnameOverride: "devops-app"
-
-service:
-  name: devops-app
-  type: NodePort
-  port: 8080
-  targetPort: 8080
-  nodePort: 30007
-
-mongodb:
-  enabled: true
-  image: mongo
-  port: 27017
-
-resources:
-   limits:
-     memory: "1Gi"
-   requests:
-     cpu: "50m"
-     memory: "256Mi"
+replicaCount: 2
 
 env:
   NODE_ENV: production
-  MONGO_URI: mongodb://mongodb:27017/devopsdb
+  MONGO_URI: "mongodb://devops-app-mongodb-service:27017/devopsdb"
+
+deployment:
+  name: devops-app
+  app: devops-assignment
+  replicas: 1
+  containerName: devops-app-container
+  image:
+    repository: devops-assignment
+    tag: "1.0"
+    pullPolicy: IfNotPresent
+  port: 8080
+  command: ["node"]
+  args: ["k8s-test.js"]
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "50m"
+    limits:
+      memory: "1Gi"
+
+service:
+  name: devops-app-service
+  app: devops-assignment
+  type: NodePort
+  port: 8080
+  nodePort: 32222
+
+mongoDeployment:
+  name: mongodb
+  app: mongodb
+  replicas: 1
+  containerName: mongodb
+  image:
+    repository: mongo
+    tag: "6.0"
+    pullPolicy: IfNotPresent
+  port: 27017
+
+mongoService:
+  name: devops-app-mongodb-service
+  app: mongodb
+  port: 27017
+  type: ClusterIP
 
 rollingUpdate:
-  maxSurge: 1
-  maxUnavailable: 1
+  maxUnavailable: 0
+  maxSurge: 2
+
+features:
+  createDeployments: true
+  createServices: true
+  createHPA: false
+  createJob: false
+  createScaleUpCronJob: false
+  createScaleDownCronJob: false
+  createCertificates: false

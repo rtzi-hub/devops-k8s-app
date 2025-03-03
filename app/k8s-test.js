@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const url = 'mongodb://mongodb:27017/devopsdb';
+const url = process.env.MONGO_URI;
 
 async function main() {
     console.log('connecting to mongo')
