@@ -1,5 +1,3 @@
 #!/bin/bash
-set -e
-
-echo "Starting Node.js application..."
-exec "$@"
+echo 'Hello from Assignment'
+exec node docker-test.js
