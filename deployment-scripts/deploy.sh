@@ -28,6 +28,10 @@ kubectl wait --for=condition=Ready pod -l app=devops-assignment --timeout=90s
 kubectl get pods
 kubectl get svc
 
+# Wait an extra 5 seconds
+echo "Waiting 5 seconds for service to stabilize..."
+sleep 5
+
 # Get Minikube IP
 MINIKUBE_IP=$(minikube ip)
 
