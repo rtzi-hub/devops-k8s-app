@@ -25,6 +25,16 @@ deployment:
     limits:
       memory: "1Gi"
 
+probes:
+  readiness:
+    path: "/health"
+    initialDelaySeconds: 5
+    periodSeconds: 10
+  liveness:
+    path: "/health"
+    initialDelaySeconds: 10
+    periodSeconds: 15
+    
 service:
   name: devops-app-service
   app: devops-assignment
