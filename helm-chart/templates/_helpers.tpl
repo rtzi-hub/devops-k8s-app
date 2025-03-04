@@ -11,6 +11,24 @@ release: {{ .Release.Name }}
 app: {{ .Values.deployment.app }}
 {{- end }}
 
+{{- define "app.readinessProbe" -}}
+readinessProbe:
+  httpGet:
+    path: {{ .Values.probes.readiness.path }}
+    port: {{ .Values.deployment.port }}
+  initialDelaySeconds: {{ .Values.probes.readiness.initialDelaySeconds }}
+  periodSeconds: {{ .Values.probes.readiness.periodSeconds }}
+{{- end }}
+
+{{- define "app.livenessProbe" -}}
+livenessProbe:
+  httpGet:
+    path: {{ .Values.probes.liveness.path }}
+    port: {{ .Values.deployment.port }}
+  initialDelaySeconds: {{ .Values.probes.liveness.initialDelaySeconds }}
+  periodSeconds: {{ .Values.probes.liveness.periodSeconds }}
+{{- end }}
+
 {{- define "app.deployment" -}}
 apiVersion: apps/v1
 kind: Deployment
@@ -44,6 +62,7 @@ spec:
               value: "{{ .Values.env.NODE_ENV }}"
             - name: MONGO_URI
               value: "{{ .Values.env.MONGO_URI }}"
+          
 {{- end }}
 
 {{- define "app.service" -}}
