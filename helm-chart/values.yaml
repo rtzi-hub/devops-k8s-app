@@ -61,7 +61,7 @@ mongoService:
 
 rollingUpdate:
   maxUnavailable: 0
-  maxSurge: 2
+  maxSurge: 1
 
 features:
   createDeployments: true
