@@ -112,6 +112,7 @@ You will see this output when all working.
 To remove everything:
 
 ```bash
+chmod +x /deployment-scripts/cleanup.sh
 ./deployment-scripts/cleanup.sh
 ```
 
