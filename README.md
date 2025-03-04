@@ -112,8 +112,7 @@ You will see this output when all working.
 To remove everything:
 
 ```bash
-helm uninstall devops-app
-minikube delete
+./deployment-scripts/cleanup.sh
 ```
 
 ---
