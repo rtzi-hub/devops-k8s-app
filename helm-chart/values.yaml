@@ -9,7 +9,6 @@ env:
 deployment:
   name: devops-app
   app: devops-assignment
-  replicas: 1
   containerName: devops-app-container
   image:
     repository: devops-assignment
@@ -45,7 +44,6 @@ service:
 mongoDeployment:
   name: mongodb
   app: mongodb
-  replicas: 1
   containerName: mongodb
   image:
     repository: mongo
