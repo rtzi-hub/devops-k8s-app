@@ -1,62 +1,37 @@
 #!/bin/bash
 set -e
 
-echo "🚀 Checking for required dependencies..."
+# Start Minikube
+minikube start
 
-# Ensure npm is installed
-if ! command -v npm &> /dev/null; then
-    echo "⚠️ npm is not installed! Installing..."
-    sudo apt update && sudo apt install -y nodejs npm
-fi
-
-# Ensure Minikube is installed
-if ! command -v minikube &> /dev/null; then
-    echo "⚠️ Minikube is not installed! Please install it first."
-    exit 1
-fi
-
-# Ensure Helm is installed
-if ! command -v helm &> /dev/null; then
-    echo "⚠️ Helm is not installed! Please install it first."
-    exit 1
-fi
-
-echo "🚀 Starting Minikube..."
-minikube start --driver=docker
-
-echo "🐳 Configuring Docker to use Minikube's environment..."
+# Use Minikube's Docker environment
 eval $(minikube -p minikube docker-env)
 
-echo "📦 Ensuring package-lock.json exists..."
-cd app/
-if [ ! -f package-lock.json ]; then
-    echo "🔄 Generating package-lock.json..."
-    npm install --package-lock-only
-fi
-cd ..
+# Build the Docker image inside Minikube
+docker build -t devops-assignment:1.0 -f docker/Dockerfile .
 
-echo "🐳 Building Docker Image inside Minikube..."
-docker build -t devops-assignment:latest -f docker/Dockerfile .
+# Install the Helm chart
+helm install devops-app ./helm-chart
 
-echo "📦 Verifying that the image exists in Minikube..."
-if ! minikube image list | grep -q "devops-assignment:latest"; then
-    echo "❌ Image was not found in Minikube! Loading manually..."
-    minikube image load devops-assignment:latest
-else
-    echo "✅ Image successfully built inside Minikube."
-fi
+# Wait until at least one pod exists
+echo "Waiting for pods to be created..."
+while [[ $(kubectl get pods -l app=devops-assignment --no-headers 2>/dev/null | wc -l) -eq 0 ]]; do
+  sleep 2
+  echo "Still waiting for pods..."
+done
 
-echo "🔧 Deploying Application using Helm..."
-helm upgrade --install devops-app ./helm-chart --set image.pullPolicy=Never
+# Now, wait for them to be fully ready
+echo "Pods detected. Waiting for them to be ready..."
+kubectl wait --for=condition=Ready pod -l app=devops-assignment --timeout=90s
 
-echo "⏳ Waiting for Pods to be ready..."
-kubectl wait --for=condition=Ready pod -l app=devops-app --timeout=90s || {
-    echo "❌ Pods did not start in time. Debugging logs..."
-    kubectl get pods
-    kubectl describe pods -l app=devops-app
-    exit 1
-}
+# Get services and pods
+kubectl get pods
+kubectl get svc
 
-echo "🔗 Getting Service URL..."
-SERVICE_URL=$(minikube service devops-app --url)
-echo "🌍 Access your application at: $SERVICE_URL"
+# Get Minikube IP
+MINIKUBE_IP=$(minikube ip)
+
+# Test application endpoints
+curl http://$MINIKUBE_IP:32222
+curl http://$MINIKUBE_IP:32222/assignment
+curl http://$MINIKUBE_IP:32222/health
